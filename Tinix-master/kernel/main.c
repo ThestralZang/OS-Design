@@ -172,11 +172,11 @@ void clearScreen()
 void help()
 {
 	printf("           *////////////////////////////////////////////*/\n");
-	printf("                   design by Doubi & LiangPuHe         \n");
+	printf("                   Design by Doubi & LiangPuHe         \n");
 	printf("           *////////////////////////////////////////////*/\n");
 	printf("\n");
 	printf("      *////////////////////////////////////////////////////////*\n");
-	printf("      *////  help         --------  shwo the help menu     ////*\n");
+	printf("      *////  help         --------  show the help menu     ////*\n");
 	printf("      *////  clear        --------  clear screen           ////*\n");
 	printf("      *////  alt+F2       --------  show the process run   ////*\n");
 	printf("      *////  alt+F3       --------  goBang game            ////*\n");
