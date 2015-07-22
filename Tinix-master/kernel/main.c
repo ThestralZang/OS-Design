@@ -172,7 +172,7 @@ void clearScreen()
 void help()
 {
 	printf("           *////////////////////////////////////////////*/\n");
-	printf("                   design by Doubi && LiangPuHe         \n");
+	printf("                   design by Doubi & LiangPuHe         \n");
 	printf("           *////////////////////////////////////////////*/\n");
 	printf("\n");
 	printf("      *////////////////////////////////////////////////////////*\n");
