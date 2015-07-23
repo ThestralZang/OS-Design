@@ -211,31 +211,47 @@ void show()
 	}
 }
 
-void readOneStringAndOneNumber(char* command,char* str,int* number)
+void readOneStringAndOneNumber(char* command,char* str,char* ch)
 {
 	int i;
 	int j=0;
 	for (i=0; i<strlen(command); i++)
 	{
-		if (command[i]!=' ') break;
+		if (command[i]!=' ') break;    //处理命令前方出现空格的情况
 	}
 	for (; i<strlen(command); i++)
 	{
-		if (command[i]==' ') break;
+		if (command[i]==' ') break;   //读取命令
 		str[j]=command[i];
 		j++;
 	}
-	for (; i<strlen(command); i++)
+	for (; i<strlen(command); i++)   //处理命令中间的空格
 	{
 		if (command[i]!=' ') break;
 	}
-
-	*number=0;
-	for (; i<strlen(command) && '0'<=command[i] && command[i]<='9'; i++)
-	{
-		*number=*number*10+(int) command[i]-'0';
+        int p=i;
+        int strLength = strlen(str);
+        for(;p<strLength; p++){
+                str[p]=0;
+        }
+	//读取是哪个字母
+	*ch='?';
+	if(i<strlen(command)){
+		*ch=command[i++];
 	}
+	if(command[i]!='\0' && command[i]!=' '){
+		*ch='?';
+	}
+
+        printf("command:");
+        int s=0;
+        for(; s<strlen(str); s++){
+                printf("%c",str[s]);
+        }
+        printf("\nnum:%c\n",*ch);
 }
+
+
 
 void dealWithCommand(char* command)
 {
@@ -258,39 +274,44 @@ void dealWithCommand(char* command)
 	}
 
 	char str[100];
-	int number;
-	readOneStringAndOneNumber(command,str,& number);
+	char ch;
+	readOneStringAndOneNumber(command,str,& ch);
+	if(ch == '?'){
+		printf("can not found this command\n");
+		return;
+	}
 	if (strcmp(str,"kill")==0)
 	{
-		if (number<0 || number>NR_TASKS+NR_PROCS)
+		if (ch<'a' || ch>NR_TASKS+NR_PROCS + 'a' - 1)
 		{
-			printf("No found this process!!");
+			printf("No found this process!!\n");
 		}
-		else if (number==0 || number==6)
+		else if (ch=='a' || ch=='g')
 		{
 			printf("You do not have sufficient privileges\n");
 		}
-		else if (2<=number && number <=5)
+		else if ('b'<=ch && ch <='f')
 		{
-			proc_table[number].state=kREADY;
-			printf("kill process %d successful\n",number);
+			proc_table[ch-'a'].state=kREADY;
+			printf("kill process %c successful\n",ch);
 		}
 		return ;
 	}
 	if (strcmp(str,"start")==0)
 	{
-		if (number<0 || number>NR_TASKS+NR_PROCS)
+		if (ch<'a' || ch>NR_TASKS+NR_PROCS + 'a' - 1)
 		{
-			printf("No found this process!!");
+			printf("No found this process!!\n");
 		}
-		else if (number==0 || number==6)
+		else if (ch=='a' || ch=='g')
 		{
 			printf("You do not have sufficient privileges\n");
 		}
-		else if (2<=number && number <=5)
-		{
-			proc_table[number].state=kRUNNABLE;
-			printf("start process %d successful\n",number);
+		else if ('b'<=ch && ch<='f')
+		{     
+                        printf("here!!!!!!!!!!!!!1\n");
+			proc_table[ch-'a'].state=kRUNNABLE;
+			printf("start process %c successful\n",ch);
 		}
 		return ;
 	}
@@ -306,7 +327,7 @@ void Terminal()
 	p_tty->startScanf=0;
 	while(1)
 	{
-		printf("DB=>");
+		printf("\nDB=>");
 		//printf("<Ticks:%x>", get_ticks());
 		openStartScanf(p_tty);
 		while (p_tty->startScanf) ;

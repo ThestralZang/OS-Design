@@ -31,11 +31,11 @@ PUBLIC void clock_handler(int irq)
 		return;
 	}
 
-	if (p_proc_ready->ticks > 0) {        //队列降级
+	if (p_proc_ready->ticks > 0) {        //当这里的ticks大于0是不会降级的，对应于时间片没用完的情况
 		return;
 
 	}
-	if (p_proc_ready->whichQueue==1)	//Èç¹ûÊÇµÚÒ»¸ö¶ÓÁÐµÄ£¬½µµ½µÚ¶þ¸ö¶ÓÁÐ
+	if (p_proc_ready->whichQueue==1)	//当ticks小于零，就会降级
 	{	
 		p_proc_ready->whichQueue=2;
 		p_proc_ready->ticks=2;
@@ -48,8 +48,7 @@ PUBLIC void clock_handler(int irq)
 		
 	}
 	p_proc_ready->state=kRUNNABLE;
-	printf("%d\n", p_proc_ready->pid);
-	schedule();
+	schedule();           //降级后进行调度，确定下一步将执行那个进程
 }
 
 /*======================================================================*

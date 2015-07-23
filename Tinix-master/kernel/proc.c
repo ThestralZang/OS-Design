@@ -16,7 +16,7 @@
 #include "proto.h"
 
 
-void initializeAllPro()	//жьпбЁУй╪╩╞кЫсп╣д╫ЬЁлё╛╪схК╣╫╡╩м╛╣д╫ЬЁлсеох╪╤╤сапжп
+void initializeAllPro()	//И┤█Ф√╟Е┬²Е╖▀Е▄√Ф┴─Ф°┴Х©⌡Г╗▀О╪▄Е┼═Е┘╔Е┬╟Д╦█Е░▄Г └Д╪≤Е┘┬Г╨╖И≤÷Е┬≈Д╦╜О╪▄ФЁ╗Ф└▐Ф≤╞И┤█Ф√╟Е┬²Е╖▀Е▄√
 {
 	PROCESS* p;
 	firstLen=0;
@@ -26,7 +26,7 @@ void initializeAllPro()	//жьпбЁУй╪╩╞кЫсп╣д╫ЬЁлё╛╪схК╣╫╡╩м╛╣д╫ЬЁлсеох╪╤╤сапжп
 	for (i=0; i<NR_TASKS+NR_PROCS; i++)
 	{
 		p=&proc_table[i]; 
-		if (p->state!=kRUNNABLE) continue;
+		if (p->state!=kRUNNABLE) continue; 
 		if (p->priority>=10)
 		{
 			firstQueue[firstLen]=p;
@@ -60,13 +60,13 @@ PUBLIC void schedule()
 	{
 		if (firstLen-firstHead>0)
 		{		
-			p_proc_ready=firstQueue[firstHead];	//╣зр╩╦Ж╤сап╟╢ууох╣╫ох╣ц
+			p_proc_ready=firstQueue[firstHead];	//б╣ц ц▓б╩б╦ц╤б╤ц⌠ц│ц░б╟б╢ц∙ц∙ц▐ц┬б╣б╫ц▐ц┬б╣ц┐
 			greatest_priority=p_proc_ready->ticks;
 			break;
 		}
-		else						//╣з╤Ч╦Ж╤сап╟╢уусеох╪╤
+		else						//б╣ц б╤ц╬б╦ц╤б╤ц⌠ц│ц░б╟б╢ц∙ц∙ц⌠ц┘ц▐ц┬б╪б╤
 		{
-			for (i=0; i<secondLen; i++)		//╣з╤Ч╦Ж╤саптЖиХеп╤ойг╥Ян╙runnableв╢л╛
+			for (i=0; i<secondLen; i++)		//б╣ц б╤ц╬б╦ц╤б╤ц⌠ц│ц░ц■ц╤ц┴ц╗ц┘ц░б╤ц▐ц┼ц┤б╥ц╠ц▌б╙runnableц≈б╢ц▄б╛
 			{
 				p=secondQueue[i];
 				if (p->state!=kRUNNABLE || p->ticks==0) continue;
@@ -75,7 +75,7 @@ PUBLIC void schedule()
 					greatest_priority = p->ticks;
 					p_proc_ready = p;
 				}
-				/*{	обцФ╢ЗбК╠╩©╗кю║ё║ё║ёнрр╡╡╩╤╝н╙й╡ц╢║ё║ё
+				/*{	ц▐ц┌ц┐ц╕б╢ц╨ц┌ц╚б╠б╩б©б╗ц▀ц─б║бёб║бёб║бёц▌ц▓ц▓б╡б╡б╩б╤б╝ц▌б╙ц┼б╡ц┐б╢б║бёб║бё
 					if (p->priority>greatest_priority && p->ticks!=0)
 					{
 						greatest_priority=p->priority;
