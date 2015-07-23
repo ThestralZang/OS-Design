@@ -210,9 +210,11 @@ void show()
 		case kRUNNING:
 			printf("    Running\n");
 			break;
-		case kREADY:
-			printf("    Ready\n");
+		case kTERMINALED:
+			printf("    Terminaled\n");
 			break;
+		case kNEW:
+		    printf("    New\n");
 		}
 	}
 }

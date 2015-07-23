@@ -30,8 +30,9 @@ typedef struct s_stackframe {	/* proc_ptr points here				¡ü Low			*/
 typedef enum
 {
 	kRUNNING,
-	kREADY,
-	kRUNNABLE
+	kRUNNABLE,
+	kTERMINALED,
+	kNEW
 }STATE;
 
 typedef struct s_proc {
