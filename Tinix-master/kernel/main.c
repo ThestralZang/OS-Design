@@ -39,19 +39,25 @@ void strlwr(char *str)
 void addToQueue(PROCESS* p)
 {
 	p->state=kRUNNABLE;
-	if (p->priority>=10)
+	if (p->priority>=20)
 	{
 		firstQueue[firstLen]=p;
 		firstLen++;
 		p->ticks=2;
 		p->whichQueue=1;
 	}
-	else
+	else if(p->priority>=10)
 	{
 		secondQueue[secondLen]=p;
 		secondLen++;
 		p->ticks=p->priority;
 		p->whichQueue=2;
+	}
+	else{
+		thirdQuene[thirdLen]=p;
+		thirdLen++;
+		p->ticks=p->priority;
+		p->whichQueue=3;
 	}
 }
 
@@ -123,11 +129,11 @@ PUBLIC int tinix_main()
 	}
 
 	//ÐÞ¸ÄÕâÀïµÄÓÅÏÈ¼¶ºÍticks
-	proc_table[0].priority = 15;
+	proc_table[0].priority = 25;
 	proc_table[1].priority =  5;
 	proc_table[2].priority =  5;
 	proc_table[3].priority =  5;
-	proc_table[4].priority =  7;
+	proc_table[4].priority =  17;
 	proc_table[5].priority =  10;
 	proc_table[6].priority =  10;
 

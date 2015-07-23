@@ -29,6 +29,7 @@ EXTERN  PROCESS*    thirdQuene[20];
 EXTERN 	int		firstLen;
 EXTERN 	int 		firstHead;
 EXTERN 	int 		secondLen;
+EXTERN  int     thirdLen;
 EXTERN	int		nr_current_console;
 
 extern	PROCESS		proc_table[];

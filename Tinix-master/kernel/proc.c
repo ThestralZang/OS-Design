@@ -27,7 +27,7 @@ void initializeAllPro()	//重新初始化所有进程，加入到不同的优先
 	{
 		p=&proc_table[i]; 
 		if (p->state!=kRUNNABLE) continue; 
-		if (p->priority>=10)
+		if (p->priority>=20)
 		{
 			firstQueue[firstLen]=p;
 			firstLen++;
@@ -35,12 +35,18 @@ void initializeAllPro()	//重新初始化所有进程，加入到不同的优先
 			p->whichQueue=1;
 			
 		}
-		else
+		else if(p->priority>=10)
 		{
 			secondQueue[secondLen]=p;
 			secondLen++;
 			p->ticks=p->priority;
 			p->whichQueue=2;
+		}
+		else{
+			thirdQuene[thirdlen]=p;
+			thirdLen++;
+			p->ticks=p->priority;
+			p->whichQueue=3;
 		}
 	}
 }

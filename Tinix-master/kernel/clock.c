@@ -43,6 +43,13 @@ PUBLIC void clock_handler(int irq)
 		secondLen++;
 		firstHead++;
 	}
+	else if(p_proc_ready->whichQueue==2){
+		p_proc_ready->whichQueue=3;
+		p_proc_ready->ticks=2;
+		thirdQueue[thirdLen]=p_proc_ready;
+		thirdLen++;
+		firstHead++;
+	}
 	else					//·ñÔòÊÇµÚ¶þ¸ö¶ÓÁÐµÄ
 	{
 		
