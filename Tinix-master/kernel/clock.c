@@ -31,11 +31,11 @@ PUBLIC void clock_handler(int irq)
 		return;
 	}
 
-	if (p_proc_ready->ticks > 0) {
+	if (p_proc_ready->ticks > 0) {        //é˜Ÿåˆ—é™çº§
 		return;
 
 	}
-	if (p_proc_ready->whichQueue==1)	//Èç¹ûÊÇµÚÒ»¸ö¶ÓÁĞµÄ£¬½µµ½µÚ¶ş¸ö¶ÓÁĞ
+	if (p_proc_ready->whichQueue==1)	//ÃˆÃ§Â¹Ã»ÃŠÃ‡ÂµÃšÃ’Â»Â¸Ã¶Â¶Ã“ÃÃÂµÃ„Â£Â¬Â½ÂµÂµÂ½ÂµÃšÂ¶Ã¾Â¸Ã¶Â¶Ã“ÃÃ
 	{	
 		p_proc_ready->whichQueue=2;
 		p_proc_ready->ticks=2;
@@ -43,12 +43,12 @@ PUBLIC void clock_handler(int irq)
 		secondLen++;
 		firstHead++;
 	}
-	else					//·ñÔòÊÇµÚ¶ş¸ö¶ÓÁĞµÄ
+	else					//Â·Ã±Ã”Ã²ÃŠÃ‡ÂµÃšÂ¶Ã¾Â¸Ã¶Â¶Ã“ÃÃÂµÃ„
 	{
 		
 	}
 	p_proc_ready->state=kRUNNABLE;
-	
+	printf("%d\n", p_proc_ready->pid);
 	schedule();
 }
 
@@ -67,13 +67,13 @@ PUBLIC void milli_delay(int milli_sec)
  *======================================================================*/
 PUBLIC void init_clock()
 {
-	/* ³õÊ¼»¯ 8253 PIT */
+	/* åˆå§‹åŒ– 8253 PIT */
 	out_byte(TIMER_MODE, RATE_GENERATOR);
 	out_byte(TIMER0, (t_8) (TIMER_FREQ/HZ) );
 	out_byte(TIMER0, (t_8) ((TIMER_FREQ/HZ) >> 8));
 
-	put_irq_handler(CLOCK_IRQ, clock_handler);	/* Éè¶¨Ê±ÖÓÖĞ¶Ï´¦Àí³ÌĞò */
-	enable_irq(CLOCK_IRQ);				/* ÈÃ8259A¿ÉÒÔ½ÓÊÕÊ±ÖÓÖĞ¶Ï */
+	put_irq_handler(CLOCK_IRQ, clock_handler);	/* è®¾å®šæ—¶é’Ÿä¸­æ–­å¤„ç†ç¨‹åº */
+	enable_irq(CLOCK_IRQ);				/* è®©8259Aå¯ä»¥æ¥å—æ—¶é’Ÿä¸­æ–­ */
 }
 
 
