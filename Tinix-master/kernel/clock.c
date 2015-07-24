@@ -25,37 +25,71 @@ PUBLIC void clock_handler(int irq)
 	//disp_str("#");
 	ticks++;
 	p_proc_ready->ticks--;
+	if(p_proc_ready -> ticks == 0){
+		p_proc_ready -> state == kTERMINALED;   //如果某进程运行完毕，则 kRUNNING to kTERMINALED
+		return;
+	}
 
 	if (k_reenter != 0) {
 		//disp_str("!");
 		return;
 	}
 
-	if (p_proc_ready->ticks > 0) {        //当这里的ticks大于0是不会降级的，对应于时间片没用完的情况
-		return;
+    //降级 kRUNNING to kRUNNABLE
+    if(p_proc_ready.whichQuene == 1){
+    	if(ticks%2 == 0 && p_proc_ready.ticks >0){
+    		p_proc_ready->whichQuene=2;
+    		secondQuene[secondLen]=p_proc_ready;
+    		firstLen--;
+    		secondLen++;
+    		firstHead++;
+    	}
+    	else{
+    		return;
+    	}
+    }
+    else if(p_proc_ready.whichQuene == 2){
+    	if(ticks%4 == 0 && p_proc_ready.ticks >0){
+    		p_proc_ready->whichQuen3=3;
+    		thirdQuene[thirdLen]=p_proc_ready;
+    		secondLen--;
+    		thirdLen++;
+    		firstHead++;
+    	}
+    	else{
+    		return;
+    	}
+    }
+    else{
 
-	}
-	if (p_proc_ready->whichQueue==1)	//当ticks小于零，就会降级
-	{	
-		p_proc_ready->whichQueue=2;
-		p_proc_ready->ticks=2;
-		secondQueue[secondLen]=p_proc_ready;
-		secondLen++;
-		firstHead++;
-	}
-	else if(p_proc_ready->whichQueue==2){
-		p_proc_ready->whichQueue=3;
-		p_proc_ready->ticks=2;
-		thirdQueue[thirdLen]=p_proc_ready;
-		thirdLen++;
-		firstHead++;
-	}
-	else					//·ñÔòÊÇµÚ¶þ¸ö¶ÓÁÐµÄ
-	{
+    }
+    p_proc_ready->state=kRUNNABLE;
+    schedule();
+	// if (p_proc_ready->ticks > 0) {        //当这里的ticks大于0是不会降级的，对应于时间片没用完的情况
+	// 	return;
+
+	// }
+	// if (p_proc_ready->whichQuene==1)	//当ticks小于零，就会降级
+	// {	
+	// 	p_proc_ready->whichQuene=2;
+	// 	p_proc_ready->ticks=2;
+	// 	secondQuene[secondLen]=p_proc_ready;
+	// 	secondLen++;
+	// 	firstHead++;
+	// }
+	// else if(p_proc_ready->whichQuene==2){
+	// 	p_proc_ready->whichQuene=3;
+	// 	p_proc_ready->ticks=2;
+	// 	thirdQuene[thirdLen]=p_proc_ready;
+	// 	thirdLen++;
+	// 	firstHead++;
+	// }
+	// else					//·ñÔòÊÇµÚ¶þ¸ö¶ÓÁÐµÄ
+	// {
 		
-	}
-	p_proc_ready->state=kRUNNABLE;
-	schedule();           //降级后进行调度，确定下一步将执行那个进程
+	// }
+	// p_proc_ready->state=kRUNNABLE;
+	// schedule();           //降级后进行调度，确定下一步将执行那个进程
 }
 
 /*======================================================================*

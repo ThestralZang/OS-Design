@@ -49,7 +49,7 @@ typedef struct s_proc {
 	int				nr_tty;
 	
 	STATE				state;
-	int 				whichQueue;
+	int 				whichQuene;
 }PROCESS;
 
 

@@ -23,8 +23,8 @@ EXTERN	t_32		k_reenter;
 
 EXTERN	TSS		tss;
 EXTERN	PROCESS*	p_proc_ready;
-EXTERN 	PROCESS*	firstQueue[20];
-EXTERN 	PROCESS*	secondQueue[20];
+EXTERN 	PROCESS*	firstQuene[20];
+EXTERN 	PROCESS*	secondQuene[20];
 EXTERN  PROCESS*    thirdQuene[20];
 EXTERN 	int		firstLen;
 EXTERN 	int 		firstHead;

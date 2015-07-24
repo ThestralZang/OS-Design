@@ -36,28 +36,28 @@ void strlwr(char *str)
 	}
 }
 
-void addToQueue(PROCESS* p)
+void addToQuene(PROCESS* p)
 {
 	p->state=kRUNNABLE;
 	if (p->priority>=20)
 	{
-		firstQueue[firstLen]=p;
+		firstQuene[firstLen]=p;
 		firstLen++;
-		p->ticks=2;
-		p->whichQueue=1;
+		p->ticks=30 - p->priority;
+		p->whichQuene=1;
 	}
 	else if(p->priority>=10)
 	{
-		secondQueue[secondLen]=p;
+		secondQuene[secondLen]=p;
 		secondLen++;
-		p->ticks=p->priority;
-		p->whichQueue=2;
+		p->ticks=30 - p->priority;
+		p->whichQuene=2;
 	}
 	else{
 		thirdQuene[thirdLen]=p;
 		thirdLen++;
-		p->ticks=p->priority;
-		p->whichQueue=3;
+		p->ticks=30 - p->priority;
+		p->which =3;
 	}
 }
 
@@ -141,7 +141,7 @@ PUBLIC int tinix_main()
 	firstLen=firstHead=secondLen=0;
 	for (i=0; i<NR_TASKS+NR_PROCS;i++)
 	{
-		addToQueue(proc_table+i);
+		addToQuene(proc_table+i);
 	}
 	//Ö¸¶¨¿ØÖÆÌ¨
 	proc_table[1].nr_tty = 0;
