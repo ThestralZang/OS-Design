@@ -36,8 +36,8 @@ PUBLIC void clock_handler(int irq)
 	}
 
     //降级 kRUNNING to kRUNNABLE
-    if(p_proc_ready.whichQuene == 1){
-    	if(ticks%2 == 0 && p_proc_ready.ticks >0){
+    if(p_proc_ready->whichQuene == 1){
+    	if(ticks%2 == 0 && p_proc_ready->ticks >0){
     		p_proc_ready->whichQuene=2;
     		secondQuene[secondLen]=p_proc_ready;
     		firstLen--;
@@ -48,9 +48,9 @@ PUBLIC void clock_handler(int irq)
     		return;
     	}
     }
-    else if(p_proc_ready.whichQuene == 2){
-    	if(ticks%4 == 0 && p_proc_ready.ticks >0){
-    		p_proc_ready->whichQuen3=3;
+    else if(p_proc_ready->whichQuene == 2){
+    	if(ticks%4 == 0 && p_proc_ready->ticks >0){
+    		p_proc_ready->whichQuene=3;
     		thirdQuene[thirdLen]=p_proc_ready;
     		secondLen--;
     		thirdLen++;

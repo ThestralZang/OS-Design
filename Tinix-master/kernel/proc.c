@@ -34,7 +34,7 @@ void initializeAllPro()	//重新初始化所有进程，加入到不同的优先
 		}else if(p->priority >= 10){
 			secondQuene[secondLen]=p;
 			secondLen++;
-			p->ticks=30 - p-priority;
+			p->ticks=30 - p-> priority;
 			p->whichQuene=2;
 		}
 		else{
@@ -96,9 +96,9 @@ PUBLIC void schedule()
     int processNumWithHighestPriority[max_resource_num];
     int numOfUsingResource = 0;
     for(m=0; m<NR_TASKS+NR_PROCS; m++){
-    	if(proc_table[m]->state == kNEW){
+    	if(proc_table[m].state == kNEW){
     		numOfCanBeRunnable++;
-    	}else if(proc_table[m]->state != kTERMINALED){
+    	}else if(proc_table[m].state != kTERMINALED){
     		numOfLeftResource--;
     		processNumWithHighestPriority[numOfUsingResource++]=m;
     	}
@@ -110,17 +110,17 @@ PUBLIC void schedule()
     for (m=0;m < numOfToBeRunnable; m++){
     	int highestPriority = 0;
     	for(n=0; n<NR_PROCS+NR_TASKS; n++){
-    		if(proc_table[n] -> priority > highestPriority && proc_table[n]->state == kNEW){
-    			bool isContained = false;
+    		if(proc_table[n].priority > highestPriority && proc_table[n].state == kNEW){
+    			int isContained = 0;
     			int l = 0;
     			for(;l<m+numOfUsingResource;l++){
     				if(processNumWithHighestPriority[l] == n){
-    					isContained = true;
+    					isContained = 1;
     					break;
     				}
     			}
-    			if(isContained == false){
-    				highestPriority = proc_table[n] ->priority;
+    			if(isContained == 0){
+    				highestPriority = proc_table[n].priority;
     				processNumWithHighestPriority[m] = n;
     			}
     		}
@@ -128,39 +128,39 @@ PUBLIC void schedule()
     }
     for( m=0; m<max_resource_num; m++){
     	int num = processNumWithHighestPriority[m];
-    	if(proc_table[num] -> state ==kNEW){
-    		proc_table[num] -> state == kRUNNABLE;          //当有空闲资源时，kNEW可转换为kRUNNABLE
+    	if(proc_table[num].state ==kNEW){
+    		proc_table[num].state == kRUNNABLE;          //当有空闲资源时，kNEW可转换为kRUNNABLE
     	}
     }
 
     //判断要操作哪个队列
     int queneToBeOperated = 0;
-    bool isAllTerminaled1 = true;
+    int isAllTerminaled1 = 1;
     for(m=0; m<firstLen; m++){
     	if(firstQuene[m] -> state != kTERMINALED){
-    		isAllTerminaled1 = false;
+    		isAllTerminaled1 = 0;
     		break;
     	}
     }
-    bool isAllTerminaled2 = true;
+    int isAllTerminaled2 = 1;
     for(m=0; m<secondLen; m++){
     	if(secondQuene[m] -> state != kTERMINALED){
-    		isAllTerminaled2 = false;
+    		isAllTerminaled2 = 0;
     		break;
     	}
     }
-    bool isAllTerminaled3 = true;	
+    int isAllTerminaled3 = 1;	
     for(m=0; m<thirdLen; m++){
     	if(thirdQuene[m] -> state != kTERMINALED){
-    		isAllTerminaled3 = false;
+    		isAllTerminaled3 = 0;
     		break;
     	}
     }
-    if(firstLen != 0 && isAllTerminaled1 == false)
+    if(firstLen != 0 && isAllTerminaled1 == 0)
     	queneToBeOperated = 1;
-    else if(secondLen != 0 && isAllTerminaled2 == false)
+    else if(secondLen != 0 && isAllTerminaled2 == 0)
     	queneToBeOperated = 2;
-    else if(thirdLen != 0 && isAllTerminaled3 == false)
+    else if(thirdLen != 0 && isAllTerminaled3 == 0)
     	queneToBeOperated = 3;
     else{
     	initializeAllPro();     //如果进程全部死亡，那么将重新全部初始化，再来一遍
@@ -186,7 +186,7 @@ PUBLIC void schedule()
     //第二级队列 优先级调度 kRUNNABLE to kRUNNING
     if(queneToBeOperated == 2 && ticks%4 == 0){
     	int highestPriorityInQuene2 = 0;
-    	pos = 0;
+    	int pos = 0;
     	for(m=0; m<secondLen; m++){
     		if(secondQuene[m] -> priority > highestPriorityInQuene2 && secondQuene[m] -> state == kRUNNABLE){
     			highestPriorityInQuene2 = secondQuene[m] -> priority;
@@ -200,6 +200,7 @@ PUBLIC void schedule()
 
     //第三级队列 FCFS kRUNNABLE to kRUNNING
     if(queneToBeOperated == 3 && ticks%8 == 0){
+        int pos=0;
     	for(m = 0; m< thirdLen; m++){
     		if(thirdQuene[m]->state == kRUNNABLE){
     			pos = m;

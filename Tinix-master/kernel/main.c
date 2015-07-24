@@ -57,7 +57,7 @@ void addToQuene(PROCESS* p)
 		thirdQuene[thirdLen]=p;
 		thirdLen++;
 		p->ticks=30 - p->priority;
-		p->which =3;
+		p->whichQuene =3;
 	}
 }
 
@@ -300,7 +300,7 @@ void dealWithCommand(char* command)
 		}
 		else if ('b'<=ch && ch <='f')
 		{
-			proc_table[ch-'a'].state=kREADY;
+			proc_table[ch-'a'].state=kRUNNABLE;
 			printf("kill process %c successful\n",ch);
 		}
 		return ;
